@@ -2,8 +2,6 @@
 #include <ctime>
 #include <cstdlib>
 
-using namespace std;
-
 const int SIZE = 3;
 // tracks the status of all fields
 bool boardStatus[SIZE][SIZE];
@@ -12,14 +10,14 @@ void printMenu();
 
 void drawBoard (bool m1[][SIZE], bool m2[][SIZE]){
     for (int i = 0; i < SIZE; i++){
-        cout << "-------------" << endl << "| ";
+        std::cout << "-------------\n" << "| ";
         for (int j = 0; j < SIZE; j++)
-            if (m1[i][j]) cout << "X" << " | ";
-            else if (m2[i][j]) cout << "O" << " | ";
-            else cout << "  | ";
-        cout << endl;
+            if (m1[i][j]) std::cout << "X" << " | ";
+            else if (m2[i][j]) std::cout << "O" << " | ";
+            else std::cout << "  | ";
+        std::cout << "\n";
     }
-    cout << "-------------" << endl;
+    std::cout << "-------------\n";
 }
 bool draw(){
     for (int i = 0; i < SIZE; i++)
@@ -52,11 +50,11 @@ bool win(bool m[][SIZE]){
 }
 void printWinOrDraw (bool m[][SIZE], char ch){
     if (win(m)) {
-        cout << ch << " player won!\n\n";
+        std::cout << ch << " player won!\n\n";
         if (ch == 'X') score[0]++;
         else score[1]++;
     }
-    else if (draw()) cout << "It's a draw!\n\n";
+    else if (draw()) std::cout << "It's a draw!\n\n";
     return;
 }
 // randomly generates field for player O
@@ -72,19 +70,19 @@ void computerChoice(int &rowComputer, int &columnComputer){
 void playerInput (int &rowPlayer, int &columnPlayer){
     do {
         do {
-            cout << "Enter a row (0, 1 or 2) for player X: ";
-            cin >> rowPlayer;
+            std::cout << "Enter a row (0, 1 or 2) for player X: ";
+            std::cin >> rowPlayer;
             if (rowPlayer < 0 || rowPlayer > 2)
-            cout << "Invalid input! Try again" << endl;
+            std::cout << "Invalid input! Try again\n";
         } while (rowPlayer < 0 || rowPlayer > 2);
         do {
-            cout << "Enter a column (0, 1 or 2) for player X: ";
-            cin >> columnPlayer;
+            std::cout << "Enter a column (0, 1 or 2) for player X: ";
+            std::cin >> columnPlayer;
             if (columnPlayer < 0 || columnPlayer > 2)
-                cout << "Invalid input! Try again" << endl;
+                std::cout << "Invalid input! Try again\n";
         } while (columnPlayer < 0 || columnPlayer > 2);
         if (!boardStatus[rowPlayer][columnPlayer]) break;
-        else cout << "That field is already taken. Use another field." << endl;
+        else std::cout << "That field is already taken. Use another field.\n";
     } while (boardStatus[rowPlayer][columnPlayer]);
 }
 void startGame(bool player[][SIZE], bool computer[][SIZE]){
@@ -100,7 +98,7 @@ void startGame(bool player[][SIZE], bool computer[][SIZE]){
         break;
         }
         computerChoice(rowComputer, columnComputer);
-        cout << "O player chooses field (" << rowComputer << "," << columnComputer << "): " << endl;
+        std::cout << "O player chooses field (" << rowComputer << "," << columnComputer << "): \n";
         // marks player O field choice as taken
         boardStatus[rowComputer][columnComputer] = true;
         computer[rowComputer][columnComputer] = true;
@@ -126,19 +124,19 @@ void setGame(){
     startGame(player, computer);
 }
 void printMenu(){
-    cout << "Choose one of following options by entering 1 or 2: "
+    std::cout << "Choose one of following options by entering 1 or 2: "
          << "\n1. Reset the game "
-         << "\n2. Exit" << endl;
+         << "\n2. Exit\n";
     int option;
-    cin >> option;
+    std::cin >> option;
     switch(option){
         case 1: setGame(); break;
-        case 2: cout << "SCORE:\nX | O\n" << score[0] << " : " << score[1] << endl; return;
-        default: cout << "Invalid input. Game ends" << endl; return;
+        case 2: std::cout << "\nSCORE:\nX | O\n" << score[0] << " : " << score[1] << "\n"; return;
+        default: std::cout << "Invalid input. Game ends\n"; return;
     }
 }
 int main(){
-    cout << "WELCOME TO THE GAME!\nYou are player X and the computer is player O.\nLet's start the game: " << endl;
+    std::cout << "WELCOME TO THE GAME!\nYou are player X and the computer is player O.\nLet's start the game: \n";
     setGame();
     return 0;
 }
